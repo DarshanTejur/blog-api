@@ -20,21 +20,21 @@ def create_new_blog(blog: schemas.BlogCreate, db: Session = Depends(database.get
     db.refresh(blog)
     return blog
 
-@router.get('/get-all-blogs')
+@router.get('/get-all-blogs',status_code=status.HTTP_200_OK)
 def get_all_blogs(db: Session = Depends(database.get_db)):
     blogs = db.query(models.Blog).all()
     if not blogs:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f' blogs not found')
     return blogs
 
-@router.get('/get-blog/{id}')
+@router.get('/get-blog/{id}',status_code=status.HTTP_200_OK)
 def get_blog(id:int,db: Session = Depends(database.get_db),current_user: int = Depends(oauth2.get_current_user)):
     blog = db.query(models.Blog).filter(models.Blog.blog_id == id).first()
     if not blog:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f'{id}, blog not found')
     return blog
 
-@router.get('/get-blogs-current-user')
+@router.get('/get-blogs-current-user',status_code=status.HTTP_200_OK)
 def get_blog_ownerid(db: Session = Depends(database.get_db),
                      current_user: int = Depends(oauth2.get_current_user)):
     blogs = db.query(models.Blog).filter(models.Blog.user_id == current_user.id).all()
@@ -42,7 +42,7 @@ def get_blog_ownerid(db: Session = Depends(database.get_db),
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f'{current_user.id},no blog not found')
     return blogs
 
-@router.get('/get-blogs-users/{id}')
+@router.get('/get-blogs-users/{id}',status_code=status.HTTP_200_OK)
 def get_blog_ownerid(id:int,db: Session = Depends(database.get_db),
                      current_user: int = Depends(oauth2.get_current_user)):
     blogs = db.query(models.Blog).filter(models.Blog.user_id == id).all()
@@ -50,7 +50,7 @@ def get_blog_ownerid(id:int,db: Session = Depends(database.get_db),
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f'{id},users blog not found')
     return blogs
 
-@router.put('/update-post/{id}')
+@router.put('/update-post/{id}',status_code=status.HTTP_200_OK)
 def update_post(id:int,blog: schemas.BlogCreate, db: Session = Depends(database.get_db),
                 current_user: int = Depends(oauth2.get_current_user)):
     update_query = db.query(models.Blog).filter(models.Blog.blog_id == id)
