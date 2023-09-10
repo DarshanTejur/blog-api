@@ -23,6 +23,8 @@ def create_new_blog(blog: schemas.BlogCreate, db: Session = Depends(database.get
 @router.get('/get-all-blogs')
 def get_all_blogs(db: Session = Depends(database.get_db)):
     blogs = db.query(models.Blog).all()
+    if not blogs:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f' blogs not found')
     return blogs
 
 @router.get('/get-blog/{id}')
