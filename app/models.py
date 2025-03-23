@@ -1,8 +1,5 @@
-import string
-from .database import Base
+from app.database import Base
 from sqlalchemy import Column, Integer, String, TIMESTAMP, Boolean, text, ForeignKey
-from sqlalchemy.orm import relationship
-import datetime
 
 
 class User(Base):
