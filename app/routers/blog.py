@@ -1,10 +1,8 @@
-import datetime
-from fastapi import Depends, FastAPI, Response, status, HTTPException, APIRouter
+from fastapi import Depends, Response, status, HTTPException, APIRouter
 from sqlalchemy.orm import Session
-from fastapi.security.oauth2 import OAuth2PasswordRequestForm
-from .. import schemas
+from app import schemas
 
-from .. import models, database, schemas, utils, oauth2
+from app import models, database, oauth2
 router = APIRouter(
     prefix='/blog',
     tags=['blog']
@@ -24,7 +22,7 @@ def create_new_blog(blog: schemas.BlogCreate, db: Session = Depends(database.get
 def get_all_blogs(db: Session = Depends(database.get_db)):
     blogs = db.query(models.Blog).all()
     if not blogs:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f' blogs not found')
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=' blogs not found')
     return blogs
 
 @router.get('/get-blog/{id}',status_code=status.HTTP_200_OK)
@@ -43,7 +41,7 @@ def get_blog_ownerid(db: Session = Depends(database.get_db),
     return blogs
 
 @router.get('/get-blogs-users/{id}',status_code=status.HTTP_200_OK)
-def get_blog_ownerid(id:int,db: Session = Depends(database.get_db),
+def get_blog_user_ownerid(id:int,db: Session = Depends(database.get_db),
                      current_user: int = Depends(oauth2.get_current_user)):
     blogs = db.query(models.Blog).filter(models.Blog.user_id == id).all()
     if not blogs:

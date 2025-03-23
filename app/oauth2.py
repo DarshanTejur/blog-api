@@ -1,8 +1,7 @@
-from statistics import mode
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 
-from . import schemas, database, models
+from app import schemas, database, models
 from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer

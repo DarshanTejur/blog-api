@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import time
 
 sqllite_url = 'sqlite:///data.db'
 engine = create_engine(sqllite_url)
