@@ -23,7 +23,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --no-cache-dir -r requirements.txt
+          pip install --no-cache-dir uv
+          uv pip install --system --requirements pyproject.toml
+
 
       - name: Run Linter (flake8)
         run: |
