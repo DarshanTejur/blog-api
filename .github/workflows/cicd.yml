@@ -8,7 +8,6 @@ on:
   pull_request:
     branches:
       - main
-      - feature/dockerization
 
 
 jobs:
@@ -25,8 +24,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-            pip install --no-cache-dir uv  # Install uv for dependency resolution
-            uv pip install --system  # Install dependencies from pyproject.toml
+          pip install --no-cache-dir uv  # Install uv for dependency resolution
+          uv pip install --system --requirements pyproject.toml
 
 
       - name: Run Linter (flake8)
